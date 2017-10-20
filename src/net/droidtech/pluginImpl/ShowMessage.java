@@ -53,7 +53,7 @@ public class ShowMessage implements DroidPlugin {
 			discussMemberLists.add(discussList.get(i).getDiscussUsers());
 		}
 		//初始化完成后测试功能，给第1个群发送测试消息
-		sender.sendToGroup(groupList.get(0).getGroupID(),"Welcome use WebQQAPI!");
+		sender.sendToGroup(groupList.get(0).getGroupID(),"Welcome to use WebQQAPI!");
 	}
 
 	@Override
