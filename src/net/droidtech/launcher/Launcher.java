@@ -88,7 +88,7 @@ public class Launcher {
 		if(!conf.exists()){
 			conf.mkdirs();
 		}
-		pm.setConfiureDirectory(conf);
+		pm.setConfigDirectory(conf);
 		pm.regist(new ShowMessage());
 		pm.enable();
 	}
