@@ -68,7 +68,7 @@ public class ShowMessage implements DroidPlugin {
 					//找到指定群员
 					if(tempUserList.get(i3).getUID()==msg.getSourceUserID()){
 						//输出消息，如果设置了群名片就显示群名片，否则显示昵称
-						System.out.println("来自群:"+groupList.get(i).getName()+",成员:"+tempUserList.get(i3).getMarkName()==null?tempUserList.get(i3).getNickName():tempUserList.get(i3).getMarkName()+" 的消息:"+msg.getContent());
+						System.out.println("来自群:"+groupList.get(i).getName()+",成员:"+(tempUserList.get(i3).getMarkName()==null?tempUserList.get(i3).getNickName():tempUserList.get(i3).getMarkName())+" 的消息:"+msg.getContent());
 						return;
 					}
 				}
@@ -82,7 +82,7 @@ public class ShowMessage implements DroidPlugin {
 		for(int i=0;i<friendList.size();i++){
 			if(friendList.get(i).getUID()==msg.getSourceUserID()){
 				//输出消息，有备注就显示备注，没有备注就显示昵称
-				System.out.println("来自好友:"+friendList.get(i).getMarkName()==null?friendList.get(i).getNickName():friendList.get(i).getMarkName()+" 的消息:"+msg.getContent());
+				System.out.println("来自好友:"+(friendList.get(i).getMarkName()==null?friendList.get(i).getNickName():friendList.get(i).getMarkName())+" 的消息:"+msg.getContent());
 				break;
 			}
 		}
