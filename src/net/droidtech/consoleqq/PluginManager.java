@@ -16,7 +16,7 @@ public class PluginManager{
 		this.credential=credential;
 	}
 	
-	public void setConfiureDirectory(DroidFile file){
+	public void setConfigDirectory(DroidFile file){
 		this.confDir=file;
 	}
 	
