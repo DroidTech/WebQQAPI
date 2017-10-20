@@ -59,7 +59,7 @@ public class PluginManager{
 		receiver=new Receiver(credential, new MessageReceivedListener(){
 
 			@Override
-			public void onFriendMessage(Message msg) {
+			public void onFriendMessage(final Message msg) {
 				// TODO Auto-generated method stub
 				for(int i=0;i<plugins.size();i++){
 					final DroidPlugin plugin=plugins.get(i);
@@ -77,7 +77,7 @@ public class PluginManager{
 			}
 
 			@Override
-			public void onGroupMessage(Message msg) {
+			public void onGroupMessage(final Message msg) {
 				// TODO Auto-generated method stub
 				for(int i=0;i<plugins.size();i++){
 					final DroidPlugin plugin=plugins.get(i);
@@ -95,7 +95,7 @@ public class PluginManager{
 			}
 
 			@Override
-			public void onDiscussMessage(Message msg) {
+			public void onDiscussMessage(final Message msg) {
 				// TODO Auto-generated method stub
 				for(int i=0;i<plugins.size();i++){
 					final DroidPlugin plugin=plugins.get(i);
@@ -113,7 +113,7 @@ public class PluginManager{
 			}
 
 			@Override
-			public void onError(Exception e, Response response) {
+			public void onError(final Exception e, final Response response) {
 				// TODO Auto-generated method stub
 				for(int i=0;i<plugins.size();i++){
 					final DroidPlugin plugin=plugins.get(i);

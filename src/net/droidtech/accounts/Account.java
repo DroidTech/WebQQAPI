@@ -127,8 +127,8 @@ public class Account {
 	}
 	
 	//获取好友列表，withHeadImg为true时会带上头像
-	public ArrayList<User> getFriendList(boolean withHeadImg){
-		ArrayList<User> friendsList=new ArrayList<User>();
+	public ArrayList<User> getFriendList(final boolean withHeadImg){
+		final ArrayList<User> friendsList=new ArrayList<User>();
 		JSONObject r=new JSONObject();
 		//构造一个请求表单，也用到了hash
 		r.put("vfwebqq",credential.getVfWebQQ());
