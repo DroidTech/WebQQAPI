@@ -42,22 +42,17 @@ public class Discuss {
 		JSONArray usersInfo=result.getJSONArray("mem_info");
 		//获取在线状态
 		JSONArray usersStatus=result.getJSONArray("mem_status");
-		//设置昵称以及uin
+		//设置昵称，状态以及uin
+		int tempIndex=0;
 		for(int i=0;i<usersInfo.size();i++){
 			JSONObject tempUserInfo=JSONObject.fromObject(usersInfo.get(i));
 			User tempUser=new User(tempUserInfo.getLong("uin"));
 			tempUser.setNickName(tempUserInfo.getString("nick"));
-			users.add(tempUser);
+			if(tempIndex<usersStatus.size()&&tempUser.getUID()==JSONObject.fromObject(usersStatus.get(tempIndex)).getLong("uin")){
+				tempUser.setOnlineStatus(true);
+				tempIndex++;
 		}
-		//设置状态
-		for(int i=0;i<usersInfo.size();i++){
-			long target=JSONObject.fromObject(usersInfo.get(i)).getLong("uin");
-			for(int i3=0;i3<usersStatus.size();i3++){
-				if(target==JSONObject.fromObject(usersInfo.get(i3)).getLong("uin")){
-					users.get(i).setOnlineStatus(true);
-					break;
-				}
-			}
+			users.add(tempUser);
 		}
 		return users;
 		

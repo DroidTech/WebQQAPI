@@ -203,23 +203,19 @@ public class Account {
 		}
 		//将好友列表清除，并设置为重新排序过的列表
 		friendsList.clear();
-		for(int i=0;i<sortedList.size();i++){
-			friendsList.add(sortedList.get(i));
-		}
+		friendsList.addAll(sortedList);
 		//设置备注，uin以及所在的分组名称
+		int tempIndex=0;
+		int tempIndex2=0;
 			for(int i=0;i<friends.size();i++){
-				long targetUin=friendsList.get(i).getUID();
-			    for(int i3=0;i3<marknames.size();i3++){
-				    if(targetUin==JSONObject.fromObject(marknames.get(i3)).getLong("uin")){
-					friendsList.get(i).setMarkName(JSONObject.fromObject(marknames.get(i3)).getString("markname"));
-					break;
-				    }
-			    }
-			    for(int i3=0;i3<onlineUsersInfo.size();i3++){
-			    	if(targetUin==JSONObject.fromObject(onlineUsersInfo.get(i3)).getLong("uin")){
-			    		friendsList.get(i).setOnlineStatus(true);
-			    		break;
-			    	}
+				long tempUID=friendsList.get(i).getUID();
+				if(tempIndex<marknames.size()&&tempUID==JSONObject.fromObject(marknames.get(tempIndex)).getLong("uin")){
+				    friendsList.get(i).setMarkName(JSONObject.fromObject(marknames.get(tempIndex)).getString("markname"));
+				    tempIndex++;
+				}
+			    if(tempIndex2<onlineUsersInfo.size()&&tempUID==JSONObject.fromObject(onlineUsersInfo.get(tempIndex2)).getLong("uin")){
+			        friendsList.get(i).setOnlineStatus(true);
+			        tempIndex2++;
 			    }
 			    for(int i3=0;i3<categories.size();i3++){
 					if(JSONObject.fromObject(friends.get(i)).getInt("categories")==JSONObject.fromObject(categories.get(i3)).getInt("index")){

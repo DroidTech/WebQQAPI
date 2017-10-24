@@ -1,7 +1,6 @@
 package net.droidtech.pluginImpl;
 
 import java.util.ArrayList;
-
 import net.droidtech.accounts.Account;
 import net.droidtech.accounts.Discuss;
 import net.droidtech.accounts.Group;
@@ -50,10 +49,8 @@ public class ShowMessage implements DroidPlugin {
 		//获取所有讨论组的所有成员
 		discussMemberLists=new ArrayList<ArrayList<User>>();
 		for(int i=0;i<discussList.size();i++){
-			discussMemberLists.add(discussList.get(i).getDiscussUsers());
+		    discussMemberLists.add(discussList.get(i).getDiscussUsers());
 		}
-		//初始化完成后测试功能，给第1个群发送测试消息
-		sender.sendToGroup(groupList.get(1).getGroupID(),"Welcome to use WebQQAPI!");
 	}
 
 	@Override

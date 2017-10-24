@@ -1,7 +1,6 @@
 package net.droidtech.accounts;
 
 import java.util.ArrayList;
-
 import net.droidtech.consoleqq.Credential;
 import net.droidtech.httputils.HttpHeader;
 import net.droidtech.httputils.HttpUtils;
@@ -52,32 +51,23 @@ public class Group {
 		try{
 		cards=result.getJSONArray("cards");
 		}catch(JSONException e){
-			System.out.println();
+			
 		}
 		//获取群成员的vip信息
 		JSONArray vip_info=result.getJSONArray("vipinfo");
 		//遍历成员列表，填充到成员list内
+		int tempIndex=0;
 		for(int i=0;i<members.size();i++){
 			JSONObject tempMemberInfo=JSONObject.fromObject(members.get(i));
 			User tempUser=new User(tempMemberInfo.getLong("uin"));
 			tempUser.setNickName(tempMemberInfo.getString("nick"));
 			tempUser.setGender(tempMemberInfo.getString("gender"));
+			tempUser.setVipLevel(JSONObject.fromObject(vip_info.get(i)).getInt("vip_level"));
+			if(tempIndex<cards.size()&&JSONObject.fromObject(cards.get(tempIndex)).getLong("muin")==tempUser.getUID()){
+			tempUser.setMarkName(JSONObject.fromObject(cards.get(tempIndex)).getString("card"));
+			tempIndex++;
+			}
 			users.add(tempUser);
-		}
-		//遍历成员列表，设置备注和vip级别
-		for(int i=0;i<members.size();i++){
-			long targetUin=JSONObject.fromObject(members.get(i)).getLong("uin");
-			for(int i3=0;i3<cards.size();i3++){
-				if(JSONObject.fromObject(cards.get(i3)).getLong("muin")==targetUin){
-					users.get(i).setMarkName(JSONObject.fromObject(cards.get(i3)).getString("card"));
-					break;
-				}
-			}
-			for(int i3=0;i3<vip_info.size();i3++){
-				if(JSONObject.fromObject(vip_info.get(i3)).getLong("u")==targetUin){
-				    users.get(i).setVipLevel(JSONObject.fromObject(vip_info.get(i3)).getInt("vip_level"));
-				}
-			}
 		}
 		return users;
 		

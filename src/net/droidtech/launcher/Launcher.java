@@ -1,6 +1,7 @@
 package net.droidtech.launcher;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import net.droidtech.consoleqq.Credential;
@@ -9,12 +10,13 @@ import net.droidtech.consoleqq.PluginManager;
 import net.droidtech.consoleqq.QrcodeVerifyListener;
 import net.droidtech.httputils.HttpHeader;
 import net.droidtech.io.DroidFile;
-import net.droidtech.pluginImpl.BasicCommunication;
+import net.droidtech.pluginImpl.AutoReply;
+import net.droidtech.pluginImpl.ShowMessage;
 
 public class Launcher {
 	
 	private static Credential credential=null;
-	private static final DroidFile credentialFile=new DroidFile("D:\\Monospace.qcre");
+	private static final DroidFile credentialFile=new DroidFile("."+File.separator+"Monospace.qcre");
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -49,7 +51,7 @@ public class Launcher {
 	}
 	
 	private static void login(){
-		DroidFile file=new DroidFile("D:\\login.png");
+		DroidFile file=new DroidFile("."+File.separator+"login.png");
 		String cookie=QrcodeLogin.getLoginCookie();
 		byte[] qrdata=QrcodeLogin.getQRCodeImage();
 		file.createNewFile();
@@ -84,12 +86,13 @@ public class Launcher {
 	private static void init(){
 		System.out.println("登录成功!");
 		PluginManager pm=new PluginManager(credential);
-		DroidFile conf=new DroidFile("D:\\pluginsConf");
+		DroidFile conf=new DroidFile("."+File.separator+"pluginsConf");
 		if(!conf.exists()){
 			conf.mkdirs();
 		}
 		pm.setConfigDirectory(conf);
 		pm.regist(new ShowMessage());
+		pm.regist(new AutoReply());
 		pm.enable();
 	}
 
