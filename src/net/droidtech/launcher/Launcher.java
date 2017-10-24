@@ -9,7 +9,7 @@ import net.droidtech.consoleqq.PluginManager;
 import net.droidtech.consoleqq.QrcodeVerifyListener;
 import net.droidtech.httputils.HttpHeader;
 import net.droidtech.io.DroidFile;
-import net.droidtech.pluginImpl.ShowMessage;
+import net.droidtech.pluginImpl.BasicCommunication;
 
 public class Launcher {
 	

@@ -73,7 +73,7 @@ public class QrcodeLogin {
 		for(int i=0;i<cookieArray.length;i++){
 			//获取ptwebqq
 			if(cookieArray[i].contains("ptwebqq")){
-				ptwebqq=cookieArray[i].substring(cookieArray[i].indexOf("=")+1,cookieArray[i].length()-1);
+				ptwebqq=cookieArray[i].substring(cookieArray[i].indexOf("=")+1,cookieArray[i].indexOf(";"));
 				break;
 			}
 		}
@@ -84,8 +84,9 @@ public class QrcodeLogin {
 				continue;
 			}
 			if(headers.get(i).getHeader().equals("Set-Cookie")){
-			String temp=headers.get(i).getValue().split(" ")[0];
+			String temp=headers.get(i).getValue().substring(0,headers.get(i).getValue().indexOf(";")+1);
 			//判断每一项cookie的值是否为空，如果等于号后面直接就是分号结尾，那就是空值，需要过滤
+			System.out.println(temp);
 			if(!temp.substring(temp.indexOf("=")+1,temp.length()).equals(";")){
 			cookie.append(temp+" ");
 			}
@@ -99,6 +100,7 @@ public class QrcodeLogin {
 		r.put("status","online");
 		//访问登录链接，需要带上前面的cookies访问
 		Response loginResult=util.post(URL.URL_LOGIN,new PostParameter[]{new PostParameter("r",r.toString())},new HttpHeader[]{new HttpHeader("Cookie",cookie.toString())});
+		System.out.println(cookie.toString());
 		JSONObject result=JSONObject.fromObject(JSONObject.fromObject(loginResult.getContent("UTF-8")));
 		JSONObject data=JSONObject.fromObject(result.get("result"));
 		//获取自己的uin
