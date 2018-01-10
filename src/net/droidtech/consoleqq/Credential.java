@@ -33,7 +33,7 @@ public class Credential implements java.io.Serializable{
 	}
 	
 	//生成hash值，这个在获取好友和自己的信息时需要使用
-	private static String hash(long x, String K) {
+	private String hash(long x, String K) {
 		if(K==null){
 			return null;
 		}
@@ -62,6 +62,15 @@ public class Credential implements java.io.Serializable{
         }
         return V1;
     }
+	
+	//从js拿来的
+	private String hash33(String arg){
+		long t=0;
+		for(int e=0,n=arg.length();e<n;++e){
+			t+=(t<<5)+arg.charAt(e);
+		}
+			return Long.toUnsignedString(2147483647&t);
+	}
 	
 	public void setRetcode(int retcode){
 		this.retcode=retcode;
@@ -113,6 +122,24 @@ public class Credential implements java.io.Serializable{
 			return false;
 		}
 	} 
+	
+	//销毁凭据，凭据一旦销毁则必须退出程序
+	public void destroy(){
+		String value=cookie.getValue();
+		String[] cookies=value.split("; ");
+		String ptcz=null;
+		for(int i=0;i<cookies.length;i++){
+			String temp=cookies[i];
+			if(temp.contains("ptcz")){
+				ptcz=temp.substring(temp.indexOf("=")+1);
+				break;
+			}
+		}
+		HttpUtils utils=new HttpUtils();
+		utils.get(URL.URL_LOGOUT.replace("[var]",hash33(ptcz)),new HttpHeader[]{cookie});
+		//https://ptlogin2.qq.com/logout?pt4_token=&pt4_hkey=0&pt4_ptcz=1573999124&deep_logout=1
+		
+	}
 	
 	public String getPtWebQQ(){
 		return ptwebqq;

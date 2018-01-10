@@ -21,7 +21,7 @@ public class Receiver {
 	}
 	
 	//启动接收器
-	public void startReceiveService(){
+	public void start(){
 		if(receiverThread==null){
 		receiverThread=new ReceiverThread(credential,listener);	
 		receiverThread.start();
@@ -33,7 +33,7 @@ public class Receiver {
 	}
 	
 	//停止接收器
-	public void stopReceiveService(){
+	public void stop(){
 		if(receiverThread!=null){
 		receiverThread.interrupt();
 		receiverThread=null;

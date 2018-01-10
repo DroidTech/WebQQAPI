@@ -68,23 +68,31 @@ public class QrcodeLogin {
 		StringBuffer cookie=new StringBuffer();
 		//取出cookies
 		ArrayList<HttpHeader> headers=response.getHeaders();
-		String[] cookieArray=cookies.getValue().split(" ");
+		String[] cookieArray=cookies.getValue().split("; ");
+		//获取验证成功后的cookies
 		String ptwebqq=null;
 		for(int i=0;i<cookieArray.length;i++){
-			//获取ptwebqq
 			if(cookieArray[i].contains("ptwebqq")){
-				ptwebqq=cookieArray[i].substring(cookieArray[i].indexOf("=")+1,cookieArray[i].indexOf(";"));
-				break;
+			ptwebqq=cookieArray[i].substring(cookieArray[i].indexOf("=")+1,cookieArray[i].indexOf(";"));
 			}
+			String tempCookie=cookieArray[i];
+			if(tempCookie.substring(tempCookie.indexOf("=")+1,tempCookie.indexOf(";")).equals("")){
+            continue;				
+			}
+			cookie.append(tempCookie.substring(0,tempCookie.indexOf(";")));
+			cookie.append("; ");
 		}
-		//在cookies内添加ptwebqq项
-		cookie.append("ptwebqq="+ptwebqq+"; ");
+		//获取跳转URL的cookies
 		for(int i=0;i<headers.size();i++){
 			if(headers.get(i).getHeader()==null){
 				continue;
 			}
 			if(headers.get(i).getHeader().equals("Set-Cookie")){
 			String temp=headers.get(i).getValue().substring(0,headers.get(i).getValue().indexOf(";")+1);
+			//避免重复
+			if(cookie.indexOf(temp)!=-1){
+				continue;
+			}
 			//判断每一项cookie的值是否为空，如果等于号后面直接就是分号结尾，那就是空值，需要过滤
 			if(!temp.substring(temp.indexOf("=")+1,temp.length()).equals(";")){
 			cookie.append(temp+" ");

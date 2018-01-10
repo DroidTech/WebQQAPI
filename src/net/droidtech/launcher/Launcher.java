@@ -1,17 +1,17 @@
-package net.droidtech.launcher;
+﻿package net.droidtech.launcher;
 
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import net.droidtech.consoleqq.Credential;
 import net.droidtech.consoleqq.QrcodeLogin;
-import net.droidtech.consoleqq.PluginManager;
+import net.droidtech.plugin.PluginManager;
 import net.droidtech.consoleqq.QrcodeVerifyListener;
 import net.droidtech.httputils.HttpHeader;
 import net.droidtech.io.DroidFile;
-import net.droidtech.pluginImpl.AutoReply;
-import net.droidtech.pluginImpl.ShowMessage;
+import net.droidtech.plugin.DroidPlugin;
 
 public class Launcher {
 	
@@ -91,9 +91,12 @@ public class Launcher {
 			conf.mkdirs();
 		}
 		pm.setConfigDirectory(conf);
-		pm.regist(new ShowMessage());
-		pm.regist(new AutoReply());
-		pm.enable();
+		ArrayList<DroidPlugin> pluginList=new ArrayList<DroidPlugin>();
+		for(int i=0;i<pluginList.size();i++){
+		System.out.println("正在注册插件"+pluginList.get(i).getName()+"，版本"+pluginList.get(i).getVersion());
+		pm.regist(pluginList.get(i));
+	    }
+		pm.start();
 	}
 
 }

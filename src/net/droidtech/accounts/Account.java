@@ -152,8 +152,7 @@ public class Account {
 				@Override
 				public void onError(HttpRequestException arg0) {
 					// TODO Auto-generated method stub
-					//避免某些好友的问题导致后面无法继续运行
-					friendsList.add(new User(0));
+					arg0.printStackTrace();
 				}
 
 				@Override
